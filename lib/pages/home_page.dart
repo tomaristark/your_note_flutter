@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/notifiers/app_theme_notifier.dart';
+
 import 'package:flutter_login_ui/auth/private_note_auth.dart';
 import 'package:flutter_login_ui/pages/book_page.dart';
 // import 'package:provider/provider.dart';
@@ -94,8 +94,6 @@ class _HomePageState extends State<HomePage> {
                              )
                           );
                         },
-                        
-                        
                         );
                       },
                       background: Container(
@@ -115,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                             // color: Colors.redAccent
                           ),),
                           onTap: (){},
-                          subtitle: Row(
+                          subtitle: const  Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Create Date"),
@@ -135,12 +133,85 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
-        child: Icon(Icons.add,color: Colors.white,),
-        onPressed: (){}),
+        child:  const Icon(Icons.add,color: Colors.white,),
+        onPressed: (){
+          _showDialog(context);
+        }),
     );
   }
 }
 
+void _showDialog(BuildContext context){
+  showDialog(context: context, 
+  builder: (BuildContext context) {
+    TextEditingController _taskController = TextEditingController();
+    return SimpleDialog(
+      title: const Text("Add Task"),
+      alignment: Alignment.center,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+            width:  MediaQuery.of(context).size.width,
+            height: 50,
+            decoration:  BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(20)
+            ),
+            child:  Padding(
+              padding: EdgeInsets.symmetric(horizontal: 7),
+              child: TextField(
+                controller: _taskController,
+                decoration: InputDecoration(
+                  
+                  hintText: "Task Name",
+                  border: InputBorder.none
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width*0.3,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Text("Select Date"),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width*0.3,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Text("Select Time"),
+                ),
+            ],),
+          )
+            ],
+          ),
+        ),
+        TextButton(onPressed: (){
+          print(_taskController.text);
+        }, child: Text("Add"))
+      ],
+    ) ;
+  })
+  ;
+}
 class HeadingText extends StatelessWidget {
   const HeadingText({
     super.key,
